@@ -1,7 +1,8 @@
 import random
+import os
+import subprocess
 
 import config
-from enemies.enemy import Enemy
 from enemies.spider import Spider
 from hero.hero import Hero
 from inventory.inventory import Inventory
@@ -14,20 +15,33 @@ def battle():
     spider = Spider()
     print('********** BATTLE STARTED **********')
 
-    while hero.is_alive() or spider.is_alive():
-        print(f"{hero.name} attack - 1 || items - 2")
-        choice = input()
-        if choice == '1':
-            print(f'{hero.name} HP {hero.hp}')
-            print(f'{spider.name} HP {spider.hp}')
-            #Randomize who attacks first
-            #1 for hero ||| 2 for enemy
-            if random.randint(1, 2) == 1:
-                #hero attack
+    while hero.is_alive() and spider.is_alive():
+        #Randomize turn
+        if random.randint(1, 2) == 1:
+            #  HERO'S TURN
+            print(f"{hero.name} attack - 1 || items - 2")
+            choice = input()
+            if choice == '1':
                 hero.attack(spider)
-            else:
-                #enemy attack
-                spider.attack(hero)
+            # This breaks the looping if spider dies from this attack
+            if not spider.is_alive():
+                break
+        else:
+            # SPIDER'S TURN
+            spider.attack(hero)
+            # This breaks the looping if hero dies from this attack
+            if not hero.is_alive():
+                break
+
+        # Print status after each round of actions
+        print(f'-> {hero.name} HP: {hero.hp} | {spider.name} HP: {spider.hp}')
+
+    # --- End of Battle Results ---
+    if hero.is_alive():
+        print(f"\nVICTORY! The {spider.name} has been defeated.")
+    else:
+        config.IS_GAME_OVER = True
+        print("\nGAME OVER... You were slain.")
 
 def select_weapon():
     print('To battle those enemies you need a weapon.')
@@ -44,6 +58,7 @@ def introduction():
     print('First we need to know your hero name, tell me what is it:')
     hero_name = input('Input here your hero name: ')
     hero.name = hero_name
+    subprocess.run(["cls" if os.name == "nt" else "clear"], shell=True)
     print(f'WELCOME {hero.name.upper()}! Let\'s start your adventure!')
     print(f'You are at level {hero.level}')
 
