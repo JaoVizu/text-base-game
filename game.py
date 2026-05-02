@@ -1,11 +1,11 @@
 import random
-import os
-import subprocess
-
 import config
+
+
 from enemies.spider import Spider
 from hero.hero import Hero
 from inventory.inventory import Inventory
+from ui_helper import UI
 
 hero = Hero()
 inventory = Inventory()
@@ -19,7 +19,7 @@ def battle():
         #Randomize turn
         if random.randint(1, 2) == 1:
             #  HERO'S TURN
-            print(f"{hero.name} attack - 1 || items - 2")
+            print(f"{hero.name.upper()} attack - 1 || items - 2")
             choice = input()
             if choice == '1':
                 hero.attack(spider)
@@ -50,7 +50,7 @@ def select_weapon():
     inventory.ammo = 5
 
 def introduction():
-    print('Welcome to my text based game! Like in the old times!!')
+    UI.announce('Welcome to my text based game! Like in the old times!!', UI.GOLD)
     print('Now imagine you are in the medieval era. You\'re just a normal person walking')
     print('But something is wrong in the whole city! People are running and screaming, the sky is grey,'
           ' and in the horizon u see a lot of enemies approaching')
@@ -58,8 +58,8 @@ def introduction():
     print('First we need to know your hero name, tell me what is it:')
     hero_name = input('Input here your hero name: ')
     hero.name = hero_name
-    subprocess.run(["cls" if os.name == "nt" else "clear"], shell=True)
-    print(f'WELCOME {hero.name.upper()}! Let\'s start your adventure!')
+    UI.clear_console()
+    UI.announce(f'WELCOME {hero.name.upper()}! Let\'s start your adventure!', UI.SUCCESS)
     print(f'You are at level {hero.level}')
 
 
