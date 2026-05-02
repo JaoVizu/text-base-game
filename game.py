@@ -1,16 +1,16 @@
 import random
 import config
 import database.game_db as db
+import weapon
 
 from enemies.spider import Spider
 from hero.hero import Hero
 from inventory.inventory import Inventory
 from ui_helper import UI
-
+from weapon.weapon import Weapon
 
 hero = Hero()
 inventory = Inventory()
-
 
 def battle():
     spider = Spider()
@@ -50,7 +50,9 @@ def battle():
 def select_weapon():
     print('To battle those enemies you need a weapon.')
     UI.announce('Take this AXE', UI.INFO)
-    inventory.weapon = 'AXE'
+    weapon = Weapon(name='AXE', damage=2)
+    hero.equipped_weapon = weapon
+    inventory.weapon = weapon
 
 def introduction():
     UI.announce('Welcome to my text based game! Like in the old times!!', UI.GOLD)
@@ -78,4 +80,7 @@ def game():
         introduction()
 
     select_weapon()
+    UI.clear_console()
     battle()
+    UI.clear_console()
+    inventory.want_to_inspect_inventory()

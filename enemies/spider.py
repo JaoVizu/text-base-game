@@ -1,7 +1,7 @@
 from random  import randint
 
 from enemies.enemy import Enemy
-from hero.hero import Hero
+import hero.hero as Hero
 from ui_helper import UI
 
 

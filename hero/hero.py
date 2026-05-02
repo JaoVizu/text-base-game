@@ -1,7 +1,7 @@
 from enemies.enemy import Enemy
-from inventory.inventory import Inventory
+import inventory.inventory as Inventory
 from ui_helper import UI
-from weapon import Weapon
+from weapon.weapon import Weapon
 
 class Hero:
     def __init__(self,
