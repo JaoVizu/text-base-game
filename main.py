@@ -1,7 +1,9 @@
 # THE MAIN SCRIPT, HERE WE START AND END GAME
-from game import game
 import config
+import database.game_db as db
+from game import game
 
+db.init_db()
 
 while True:
     if config.IS_GAME_OVER: break

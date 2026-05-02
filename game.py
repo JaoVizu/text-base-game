@@ -1,11 +1,12 @@
 import random
 import config
-
+import database.game_db as db
 
 from enemies.spider import Spider
 from hero.hero import Hero
 from inventory.inventory import Inventory
 from ui_helper import UI
+
 
 hero = Hero()
 inventory = Inventory()
@@ -21,6 +22,9 @@ def battle():
             #  HERO'S TURN
             print(f"{hero.name.upper()} attack - 1 || items - 2")
             choice = input()
+            if choice != '1' and '2':
+                print(f"{hero.name.upper()} ATTACK - 1 || ITEMS - 2")
+                choice = input()
             if choice == '1':
                 hero.attack(spider)
             # This breaks the looping if spider dies from this attack
@@ -45,9 +49,8 @@ def battle():
 
 def select_weapon():
     print('To battle those enemies you need a weapon.')
-    print('Take this BOW and 5 ARROWS')
-    inventory.weapon = 'BOW'
-    inventory.ammo = 5
+    UI.announce('Take this AXE', UI.INFO)
+    inventory.weapon = 'AXE'
 
 def introduction():
     UI.announce('Welcome to my text based game! Like in the old times!!', UI.GOLD)
@@ -58,12 +61,21 @@ def introduction():
     print('First we need to know your hero name, tell me what is it:')
     hero_name = input('Input here your hero name: ')
     hero.name = hero_name
+    db.save_game(hero)
     UI.clear_console()
     UI.announce(f'WELCOME {hero.name.upper()}! Let\'s start your adventure!', UI.SUCCESS)
     print(f'You are at level {hero.level}')
 
 
 def game():
-    introduction()
+    #loading exist data
+    save_data =db.load_game()
+
+    if save_data:
+        hero.level, hero.hp, hero.name, hero.base_dmg, hero.xp = save_data
+        UI.announce(f"WELCOME BACK {hero.name.upper()}", UI.SUCCESS)
+    else:
+        introduction()
+
     select_weapon()
     battle()
