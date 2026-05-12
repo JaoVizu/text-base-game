@@ -9,8 +9,11 @@ from inventory.inventory import Inventory
 from ui_helper import UI
 from weapon.weapon import Weapon
 
-hero = Hero()
-inventory = Inventory()
+
+weapon = Weapon(name='AXE', damage=2)
+inventory = Inventory(weapon=weapon)
+hero = Hero(inventory=inventory, equipped_weapon=weapon)
+
 
 def battle():
     spider = Spider()
@@ -50,7 +53,6 @@ def battle():
 def select_weapon():
     print('To battle those enemies you need a weapon.')
     UI.announce('Take this AXE', UI.INFO)
-    weapon = Weapon(name='AXE', damage=2)
     hero.equipped_weapon = weapon
     inventory.weapon = weapon
 

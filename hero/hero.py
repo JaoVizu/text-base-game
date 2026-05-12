@@ -5,13 +5,13 @@ from weapon.weapon import Weapon
 
 class Hero:
     def __init__(self,
+                 inventory: Inventory,
+                 equipped_weapon: Weapon,
                  level: int = 0,
                  hp: int = 100,
                  name :str = 'Moramboulous',
                  base_dmg: int = 3,
                  xp: int = 0,
-                 inventory: Inventory = None,
-                 equipped_weapon: Weapon = None
                  ):
         self.name = name
         self.level = level

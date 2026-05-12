@@ -3,7 +3,7 @@ from weapon.weapon import Weapon
 
 
 class Inventory:
-    def __init__(self, weapon: Weapon = None, ammo: int = 0, items: dict = {} ):
+    def __init__(self, weapon: Weapon, ammo: int = 0, items: dict = {} ):
         self.weapon = weapon
         self.ammo = ammo
         self.items = items
