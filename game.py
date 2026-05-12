@@ -64,7 +64,7 @@ def introduction():
     print('Well, what do u do now?')
     print('First we need to know your hero name, tell me what is it:')
     hero_name = input('Input here your hero name: ')
-    hero.name = hero_name
+    hero.name = hero_name.upper()
     db.save_game(hero)
     UI.clear_console()
     UI.announce(f'WELCOME {hero.name.upper()}! Let\'s start your adventure!', UI.SUCCESS)
