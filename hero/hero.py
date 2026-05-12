@@ -34,5 +34,8 @@ class Hero:
         enemy.hp -= total_dmg
         UI.announce(f'You hit for {total_dmg} damage!', UI.SUCCESS)
 
+    def inspect_inventory(self):
+        self.inventory.inspect()
+
     def is_alive(self):
         return self.hp > 0
