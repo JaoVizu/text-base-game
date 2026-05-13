@@ -2,6 +2,7 @@ import random
 import config
 import database.game_db as db
 import weapon
+from battle.Battle import Battle
 
 from enemies.spider import Spider
 from hero.hero import Hero
@@ -17,38 +18,44 @@ hero = Hero(inventory=inventory, equipped_weapon=weapon)
 
 def battle():
     spider = Spider()
-    print('********** BATTLE STARTED **********')
+    bt_class = Battle(spider, hero)
+    bt_class.battle_start()
+    UI.clear_console()
 
-    while hero.is_alive() and spider.is_alive():
-        #Randomize turn
-        if random.randint(1, 2) == 1:
-            #  HERO'S TURN
-            print(f"{hero.name.upper()} attack - 1 || items - 2")
-            choice = input()
-            if choice != '1' and '2':
-                print(f"{hero.name.upper()} ATTACK - 1 || ITEMS - 2")
-                choice = input()
-            if choice == '1':
-                hero.attack(spider)
-            # This breaks the looping if spider dies from this attack
-            if not spider.is_alive():
-                break
-        else:
-            # SPIDER'S TURN
-            spider.attack(hero)
-            # This breaks the looping if hero dies from this attack
-            if not hero.is_alive():
-                break
-
-        # Print status after each round of actions
-        print(f'-> {hero.name} HP: {hero.hp} | {spider.name} HP: {spider.hp}')
-
-    # --- End of Battle Results ---
-    if hero.is_alive():
-        print(f"\nVICTORY! The {spider.name} has been defeated.")
-    else:
-        config.IS_GAME_OVER = True
-        print("\nGAME OVER... You were slain.")
+# def battle():
+#     spider = Spider()
+#     print('********** BATTLE STARTED **********')
+#
+#     while hero.is_alive() and spider.is_alive():
+#         #Randomize turn
+#         if random.randint(1, 2) == 1:
+#             #  HERO'S TURN
+#             print(f"{hero.name.upper()} attack - 1 || items - 2")
+#             choice = input()
+#             if choice != '1' and '2':
+#                 print(f"{hero.name.upper()} ATTACK - 1 || ITEMS - 2")
+#                 choice = input()
+#             if choice == '1':
+#                 hero.attack(spider)
+#             # This breaks the looping if spider dies from this attack
+#             if not spider.is_alive():
+#                 break
+#         else:
+#             # SPIDER'S TURN
+#             spider.attack(hero)
+#             # This breaks the looping if hero dies from this attack
+#             if not hero.is_alive():
+#                 break
+#
+#         # Print status after each round of actions
+#         print(f'-> {hero.name} HP: {hero.hp} | {spider.name} HP: {spider.hp}')
+#
+#     # --- End of Battle Results ---
+#     if hero.is_alive():
+#         print(f"\nVICTORY! The {spider.name} has been defeated.")
+#     else:
+#         config.IS_GAME_OVER = True
+#         print("\nGAME OVER... You were slain.")
 
 def select_weapon():
     print('To battle those enemies you need a weapon.')

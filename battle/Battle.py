@@ -18,23 +18,21 @@ class Battle:
 
     def get_player_choice(self, choice):
         match choice:
-            case 1:
+            case '1':
                 self.player_instance.attack(self.enemy_instance)
-            case 2:
+            case '2':
                 self.player_instance.inspect_inventory()
             case _: #Default case
                 UI.announce(f"{self.player_instance.name.upper()}'1 - ATTACK", UI.INFO)
                 UI.announce(f"{self.player_instance.name.upper()}'2 - ITEMS", UI.INFO)
-
-
 
     def battle_start(self):
         while self.verify_if_player_and_enemy_is_alive():
             if randint(1,2) == 1:
                 #HERO'S TURN
                 UI.announce(f"{self.player_instance.name.upper()}'s turn", UI.ERROR)
-                UI.announce(f"{self.player_instance.name.upper()}'1 - ATTACK", UI.INFO)
-                UI.announce(f"{self.player_instance.name.upper()}'2 - ITEMS", UI.INFO)
+                UI.announce("1 - ATTACK", UI.INFO)
+                UI.announce("2 - ITEMS", UI.INFO)
                 choice = input()
                 self.get_player_choice(choice)
                 if not self.enemy_instance.is_alive():
