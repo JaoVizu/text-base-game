@@ -32,7 +32,7 @@ class Hero:
             total_dmg = self.base_dmg
 
         enemy.hp -= total_dmg
-        UI.announce(f'You hit for {total_dmg} damage!', UI.SUCCESS)
+        UI.announce(f'You hit for {total_dmg} damage!', UI.INFO)
 
     def inspect_inventory(self):
         self.inventory.inspect()

@@ -36,7 +36,7 @@ class Battle:
                 choice = input()
                 self.get_player_choice(choice)
                 if not self.enemy_instance.is_alive():
-                    return
+                    break
             else:
                 #SPIDER'S TURN
                 self.enemy_instance.attack(self.player_instance)
