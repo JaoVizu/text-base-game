@@ -1,6 +1,7 @@
 from random import randint
 from unittest import case
 
+import config
 from enemies.enemy import Enemy
 from hero.hero import Hero
 from ui_helper import UI
@@ -46,7 +47,12 @@ class Battle:
 
             UI.announce(f'-> {self.player_instance.name} HP: {self.player_instance.hp} | {self.enemy_instance.name} HP: {self.enemy_instance.hp}', UI.INFO)
 
-
+        # --- End of Battle Results ---
+        if self.player_instance.is_alive():
+            UI.announce(f"\nVICTORY! The {self.enemy_instance.name} has been defeated.", UI.SUCCESS)
+        else:
+            config.IS_GAME_OVER = True
+            UI.announce("\nGAME OVER... You were slain.", UI.ERROR)
 
 
 
